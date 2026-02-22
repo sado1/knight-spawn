@@ -44,11 +44,9 @@ Restart=always
 [Install]
 WantedBy=multi-user.target'''
 
-    def return_INI_for_game(self):
-        if self.GAME == 'KMR':
-            pass
-        elif self.GAME == 'KP':
-            pass
+    def sed_ini(self, key, value):
+        print('sed -i "s/' + key + '=.*/' + key + '=' + value + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"')
+
         '''
 ServerName='REPLACE_SERVER_NAME'
 WelcomeMessage=REPLACE_WELCOME_MESSAGE
@@ -66,11 +64,11 @@ UDPScanPort=REPLACE_SERVER_PORT_2
         print("chmod +x " + self.GAME_BINARY_NAME[self.GAME])
         print("echo '" + self.SYSTEMD_UNIT_CONTENT  + "' > " + self.SYSTEMD_UNIT_PATH + "\n\nchmod +x " + self.SYSTEMD_UNIT_PATH + "\n")
         print("systemctl start " + self.SYSTEMD_UNIT_NAME + "; sleep 3; systemctl stop " + self.SYSTEMD_UNIT_NAME)
-        print('sed -i "s/ServerName=.*/ServerName=\'' + self.SRV_NAME + '\'/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"' )
-        print('sed -i "s/WelcomeMessage=.*/WelcomeMessage=' + self.SRV_DESCRIPTION + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"' )
-        print('sed -i "s/ServerPort=.*/ServerPort=' + str(self.SRV_PORT) + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"' )
+        self.sed_ini("ServerName", '\'' + self.SRV_NAME + '\'')
+        self.sed_ini("WelcomeMessage", self.SRV_DESCRIPTION)
+        self.sed_ini("ServerPort", str(self.SRV_PORT))
         if self.GAME == 'KMR':
-            print('sed -i "s/UDPScanPort=.*/UDPScanPort=' + str(self.SRV_PORT + 1) + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"' )
+            self.sed_ini("UDPScanPort", str(self.SRV_PORT + 1))
 
 '''
 TODO
