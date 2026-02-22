@@ -2,7 +2,8 @@
 Generates commands to spawn a server instance for Knights and Merchants: Remake or Knights Province.
 
 # Example usage
-```$ ./main.py some_username https://release.xxx.xyz/KMR_linux_dedicated_servers_r12345_net_v12345.7z r12345 KMR 56789 '[$00ff00]Server name' '[$ff0000]Server description.'
+```bash
+$ ./main.py some_username https://release.xxx.xyz/KMR_linux_dedicated_servers_r12345_net_v12345.7z r12345 KMR 56789 '[$00ff00]Server name' '[$ff0000]Server description.'
 
 apt update
 apt install p7zip-full
