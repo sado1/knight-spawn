@@ -21,9 +21,7 @@ class read_configuration:
         print("useradd " + self.SRV_USER + " -m " + self.SRV_HOME_PATH )
         print("mkdir -p " + self.SRV_PATH)
         print("curl -L " + self.ARCHIVE_URL + " -o " + self.SRV_PATH + "/" + self.SRV_FILENAME)
-        # https://api.beeper.com/desktop/download/linux/" + beeper_arch + "/stable/com.automattic.beeper.desktop -o ~/Pobrane/beeper.AppImage
         print("cd " + self.SRV_PATH )
-        # wget self.ARCHIVE_URL
         print("7z x " + self.SRV_FILENAME  + " " + self.SRV_PATH)
         systemd_unit = '''file
 content
