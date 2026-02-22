@@ -47,13 +47,6 @@ WantedBy=multi-user.target'''
     def sed_ini(self, key, value):
         print('sed -i "s/' + key + '=.*/' + key + '=' + value + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"')
 
-        '''
-ServerName='REPLACE_SERVER_NAME'
-WelcomeMessage=REPLACE_WELCOME_MESSAGE
-ServerPort=REPLACE_SERVER_PORT
-UDPScanPort=REPLACE_SERVER_PORT_2
-        '''
-
     def generate_instructions(self):
         # print("apt update\napt install " + self.to_install)
         print("useradd " + self.SRV_USER + " -m " + self.SRV_HOME_PATH )
