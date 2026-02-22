@@ -39,5 +39,5 @@ sed -i "s/ServerPort=.*/ServerPort=56789/g" "KaM Remake Server Settings.ini"
 sed -i "s/UDPScanPort=.*/UDPScanPort=56790/g" "KaM Remake Server Settings.ini"
 rm KMR_linux_dedicated_servers_r12345_net_v12345.7z
 
-Done. Now test connectivity and remember to allow access to your port on firewalls.
+# Done. Now test connectivity and remember to allow access to your port on firewalls.
 ```

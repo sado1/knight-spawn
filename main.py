@@ -20,4 +20,4 @@ else:
     print()
     c1 = generator.read_configuration(sys.argv)
     c1.generate_instructions()
-    print("\nDone. Now test connectivity and remember to allow access to your port on firewalls.")
+    print("\n# Done. Now test connectivity and remember to allow access to your port on firewalls.")
