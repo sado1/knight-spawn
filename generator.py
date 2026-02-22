@@ -6,13 +6,14 @@ class read_configuration:
         self.INSTANCE_NAME = main_argv[3]
         self.GAME = main_argv[4]
         self.SRV_PORT = int(main_argv[5])
-        self.SRV_NAME = main_argv[6]
-        self.SRV_DESCRIPTION = main_argv[7]
+        self.SRV_NAME = "\$".join(main_argv[6].split('$'))
+        #str([print(part + '\$') for part in main_argv[6].split('$')])
+        self.SRV_DESCRIPTION = "\$".join(main_argv[7].split('$'))
 
         self.SRV_FILENAME = self.ARCHIVE_URL.split('/')[-1]
         self.SRV_HOME_PATH = "/home/" + self.SRV_USER
         self.SRV_PATH = self.SRV_HOME_PATH + "/" + self.INSTANCE_NAME
-        self.to_install = "xxx"
+        self.to_install = "p7zip-full"
         self.SETTINGS_FILE_NAME = {
             'KMR': "KaM Remake Server Settings.ini",
             'KP': "KnightsProvince_Settings.ini"
@@ -48,13 +49,14 @@ WantedBy=multi-user.target'''
         print('sed -i "s/' + key + '=.*/' + key + '=' + value + '/g" "' + self.SETTINGS_FILE_NAME[self.GAME] + '"')
 
     def generate_instructions(self):
-        # print("apt update\napt install " + self.to_install)
-        print("useradd " + self.SRV_USER + " -m " + self.SRV_HOME_PATH )
+        print("apt update\napt install " + self.to_install)
+        print("useradd -m -d " + self.SRV_HOME_PATH + " " + self.SRV_USER )
         print("mkdir -p " + self.SRV_PATH)
-        print("curl -L " + self.ARCHIVE_URL + " -o " + self.SRV_PATH + "/" + self.SRV_FILENAME)
         print("cd " + self.SRV_PATH )
-        print("7z x " + self.SRV_FILENAME  + " " + self.SRV_PATH)
+        print("curl -L " + self.ARCHIVE_URL + " -o " + self.SRV_FILENAME)
+        print("7z x " + self.SRV_FILENAME)
         print("chmod +x " + self.GAME_BINARY_NAME[self.GAME])
+        print("chown " + self.SRV_USER + ":" + self.SRV_USER + " -R " + self.SRV_PATH)
         print("echo '" + self.SYSTEMD_UNIT_CONTENT  + "' > " + self.SYSTEMD_UNIT_PATH + "\n\nchmod +x " + self.SYSTEMD_UNIT_PATH + "\n")
         print("systemctl start " + self.SYSTEMD_UNIT_NAME + "; sleep 3; systemctl stop " + self.SYSTEMD_UNIT_NAME)
         self.sed_ini("ServerName", '\'' + self.SRV_NAME + '\'')
@@ -62,10 +64,10 @@ WantedBy=multi-user.target'''
         self.sed_ini("ServerPort", str(self.SRV_PORT))
         if self.GAME == 'KMR':
             self.sed_ini("UDPScanPort", str(self.SRV_PORT + 1))
+        print("rm " + self.SRV_FILENAME)
 
 '''
 TODO
-- start server, sleep 5, stop server, replace INI settings, start server
 
 optional:
 - check if port is already used

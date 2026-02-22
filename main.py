@@ -17,7 +17,7 @@ if len(sys.argv) < ARGS_NR + 1:
     print("* - multi-word arguments - use ' ' around them (\" \" will not work well with color codes!)")
     exit(1)
 else:
-    print(sys.argv)
+    print()
     c1 = generator.read_configuration(sys.argv)
     c1.generate_instructions()
-    print("Done.")
+    print("\nDone. Now test connectivity and remember to allow access to your port on firewalls.")
