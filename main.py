@@ -3,14 +3,21 @@
 import sys
 import generator
 
-if len(sys.argv) < 4:
-    print("Error - you need 3 arguments and this is what you provided: " + str(sys.argv[1:]))
+ARGS_NR = 7
+
+if len(sys.argv) < ARGS_NR + 1:
+    print("Error - you need " + str(ARGS_NR) + " arguments and this is what you provided: " + str(sys.argv[1:]))
     print("SRV_USER which will run the server")
     print("ARCHIVE_URL to dedicated server archive")
     print("INSTANCE_NAME - name for server directory/service ie. kp_r12345 - you can deploy multiple versions that way")
     print("GAME - KMR or KP")
+    print("SRV_PORT - ie. default 56789")
+    print("SRV_NAME*")
+    print("SRV_DESCRIPTION*")
+    print("* - multi-word arguments - use ' ' around them (\" \" will not work well with color codes!)")
     exit(1)
 else:
-    c1 = generator.read_configuration(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    print(sys.argv)
+    c1 = generator.read_configuration(sys.argv)
     c1.generate_instructions()
     print("Done.")
