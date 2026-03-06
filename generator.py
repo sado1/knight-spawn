@@ -6,13 +6,13 @@ class read_configuration:
         self.INSTANCE_NAME = main_argv[3]
         self.GAME = main_argv[4]
         self.SRV_PORT = int(main_argv[5])
-        self.SRV_NAME = "\$".join(main_argv[6].split('$'))
+        self.SRV_NAME = "\\$".join(main_argv[6].split('$'))
         #str([print(part + '\$') for part in main_argv[6].split('$')])
-        self.SRV_DESCRIPTION = "\$".join(main_argv[7].split('$'))
+        self.SRV_DESCRIPTION = "\\$".join(main_argv[7].split('$'))
 
         self.SRV_FILENAME = self.ARCHIVE_URL.split('/')[-1]
         self.SRV_HOME_PATH = "/home/" + self.SRV_USER
-        self.SRV_PATH = self.SRV_HOME_PATH + "/" + self.INSTANCE_NAME
+        self.SRV_PATH = self.SRV_HOME_PATH + "/" + self.GAME + "_" + self.INSTANCE_NAME
         self.to_install = "p7zip-full"
         self.SETTINGS_FILE_NAME = {
             'KMR': "KaM Remake Server Settings.ini",
@@ -65,6 +65,7 @@ WantedBy=multi-user.target'''
         if self.GAME == 'KMR':
             self.sed_ini("UDPScanPort", str(self.SRV_PORT + 1))
         print("rm " + self.SRV_FILENAME)
+        print("systemctl enable --now " + self.SYSTEMD_UNIT_NAME)
 
 '''
 TODO
